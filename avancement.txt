@@ -1,8 +1,11 @@
 L'idée est que la structure possède des studios de musique pour répéter, ainsi que des studios pour enregistrer, mixer, ou mastériser. T'es un client, tu veux réserver, tu fais une demande 
 via l'appli en précisant nom prénom, le nombre de personnes présentes, le matos que tu veux en particulier (si c'est le cas), la raison de la demande (répétition ou mix ou master), 
 est-ce que tu veux un employé du style un technicien son, un ingé son, etc, et d'autres choses. 
-Ensuite la structure fait une proposition (SESSION) avec un prix, un studio, etc, avec un statut qui évolue suivant si le client l'accepte ou non. (TODO: gérer le timeout d'une session en 
-attente depuis trop longtemps)
-
-
+Ensuite la structure fait une proposition (SESSION) avec un prix, un studio, etc, avec un statut qui évolue suivant si le client l'accepte ou non.
 https://excalidraw.com/#json=noveirJtkLpSQRSweL5Hl,chLFP0klAfJ5W_xKhgcO7g
+
+J'ai fait un petit docker qui lance la base puis les scripts de création et de remplissage
+Plus qu'à attaquer le php  
+
+TODO: ajouter des champs 'description VARCHAR(500)' là où c'est nécessaire
+TODO: changer le volume MySQL actuel en un volume persistant
