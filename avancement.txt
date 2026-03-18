@@ -5,7 +5,7 @@ Ensuite la structure fait une proposition (SESSION) avec un prix, un studio, etc
 https://excalidraw.com/#json=noveirJtkLpSQRSweL5Hl,chLFP0klAfJ5W_xKhgcO7g
 
 J'ai fait un petit docker qui lance la base puis les scripts de création et de remplissage
-Plus qu'à attaquer le php  
+Plus qu'à attaquer le php
 
 TODO: ajouter des champs 'description VARCHAR(500)' là où c'est nécessaire
 TODO: changer le volume MySQL actuel en un volume persistant
