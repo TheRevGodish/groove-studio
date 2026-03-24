@@ -42,7 +42,7 @@ CREATE TABLE UTILISATEUR (
                         id              INT             PRIMARY KEY AUTO_INCREMENT,
                         nom             VARCHAR(50)     NOT NULL,
                         prenom          VARCHAR(50)     NOT NULL,
-                        password        VARCHAR(50)     NOT NULL,
+                        password        VARCHAR(255)     NOT NULL,
                         email           VARCHAR(100)    NOT NULL UNIQUE,
                         telephone       VARCHAR(15),
                         is_admin        BOOLEAN         NOT NULL DEFAULT FALSE
@@ -93,7 +93,7 @@ CREATE TABLE ETRE_DISPONIBLE (
                                        id_creneau      INT         NOT NULL,
                                        PRIMARY KEY (NIR, id_creneau),
                                        FOREIGN KEY (NIR)           REFERENCES EMPLOYE(NIR),
-                                       FOREIGN KEY (id_creneau)    REFERENCES SPECIALITE(id_specialite)
+                                       FOREIGN KEY (id_creneau)    REFERENCES CRENEAU(id_creneau)
 );
 
 CREATE TABLE ETRE_RESERVABLE (
