@@ -38,12 +38,14 @@ CREATE TABLE EMPLOYE (
                          FOREIGN KEY (SIREN) REFERENCES STRUCTURE(SIREN)
 );
 
-CREATE TABLE CLIENT (
-                        numero_client   INT             PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE UTILISATEUR (
+                        id              INT             PRIMARY KEY AUTO_INCREMENT,
                         nom             VARCHAR(50)     NOT NULL,
                         prenom          VARCHAR(50)     NOT NULL,
+                        password        VARCHAR(255)     NOT NULL,
                         email           VARCHAR(100)    NOT NULL UNIQUE,
-                        telephone       VARCHAR(15)
+                        telephone       VARCHAR(15),
+                        is_admin        BOOLEAN         NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE MATERIEL (
@@ -61,7 +63,7 @@ CREATE TABLE DEMANDE (
                          nb_technicien   INT             NOT NULL DEFAULT 0,
                          numero_client   INT             NOT NULL,
                          id_activite     INT             NOT NULL,
-                         FOREIGN KEY (numero_client) REFERENCES CLIENT(numero_client),
+                         FOREIGN KEY (numero_client) REFERENCES UTILISATEUR(id),
                          FOREIGN KEY (id_activite)   REFERENCES ACTIVITE(id_activite)
 );
 
@@ -78,7 +80,29 @@ CREATE TABLE SESSION (
                          FOREIGN KEY (id_demande)    REFERENCES DEMANDE(numero_demande)
 );
 
+CREATE TABLE CRENEAU (
+                         id_creneau      INT             PRIMARY KEY AUTO_INCREMENT,
+                         debut           DATETIME        NOT NULL,
+                         fin             DATETIME        NOT NULL
+);
+
 -- Tables de jonction
+
+CREATE TABLE ETRE_DISPONIBLE (
+                                       NIR             CHAR(15)    NOT NULL,
+                                       id_creneau      INT         NOT NULL,
+                                       PRIMARY KEY (NIR, id_creneau),
+                                       FOREIGN KEY (NIR)           REFERENCES EMPLOYE(NIR),
+                                       FOREIGN KEY (id_creneau)    REFERENCES CRENEAU(id_creneau)
+);
+
+CREATE TABLE ETRE_RESERVABLE (
+                                       numero_studio   INT         NOT NULL,
+                                       id_creneau      INT         NOT NULL,
+                                       PRIMARY KEY (numero_studio, id_creneau),
+                                       FOREIGN KEY (numero_studio) REFERENCES STUDIO(numero_studio),
+                                       FOREIGN KEY (id_creneau)    REFERENCES CRENEAU(id_creneau)
+);
 
 CREATE TABLE AVOIR_POUR_SPECIALITE (
                                        NIR             CHAR(15)    NOT NULL,

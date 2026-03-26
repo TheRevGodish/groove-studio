@@ -43,10 +43,10 @@ VALUES ('197053226784966', 2),
        ('190050860784471', 1),
        ('108115660174310', 1);
 
--- CLIENT
-INSERT INTO CLIENT (nom, prenom, email, telephone)
-VALUES ('SAJUS', 'Thomas', 'thomas.sajus@hotmail.fr', '0640973094'),
-       ('SCHNEIDER', 'Rodolphe', 'rodolphe.schneider@gmail.com', '0789947201');
+-- UTILISATEUR
+INSERT INTO UTILISATEUR (nom, prenom, password, email, telephone, is_admin)
+VALUES ('SAJUS', 'Thomas', 'password','thomas.sajus@hotmail.fr', '0640973094', false),
+       ('SCHNEIDER', 'Rodolphe', 'password', 'rodolphe.schneider@gmail.com', '0789947201', true);
 
 -- MATERIEL (dépend de STUDIO, nullable si mobile)
 INSERT INTO MATERIEL (nom, mobile, numero_studio)
