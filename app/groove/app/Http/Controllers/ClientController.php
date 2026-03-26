@@ -6,9 +6,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
-    public function index()
-    {
-        // Uniquement les sessions du client connecté
+    public function index() {
         $sessions = DB::table('SESSION')
             ->join('DEMANDE', 'SESSION.id_demande', '=', 'DEMANDE.numero_demande')
             ->join('STUDIO', 'SESSION.numero_studio', '=', 'STUDIO.numero_studio')
@@ -18,6 +16,6 @@ class ClientController extends Controller
             ->orderBy('SESSION.debut', 'desc')
             ->get();
 
-        return view('client.dashboard', compact('sessions'));
+        return view('client.dashboard_client', compact('sessions'));
     }
 }

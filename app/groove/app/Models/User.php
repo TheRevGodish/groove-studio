@@ -16,7 +16,7 @@ class User extends Authenticatable
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
-    public mixed $is_admin;
+    // public mixed $is_admin;
     protected $table = 'UTILISATEUR';
     protected $primaryKey = 'id';
     public $timestamps = false;

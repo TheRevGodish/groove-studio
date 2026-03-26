@@ -9,3 +9,7 @@ Plus qu'à attaquer le php
 
 TODO: ajouter des champs 'description VARCHAR(500)' là où c'est nécessaire
 TODO: changer le volume MySQL actuel en un volume persistant
+
+php artisan tinker (REPL avec le contexte de l'appli) pour hasher les password
+    --> DB::table('UTILISATEUR')->where('email', '{value}->update(['password' => bcrypt('password')]);
+        --> hasher le password dès l'ajout d'un user dans le script d'insert en bdd
