@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\PasswordController;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -17,8 +20,20 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
-    {
-        //
+    public function boot(): void {
+        // TEMPORAIRE hasher les 2 password déjà présent en bdd juste pour test
+        // TODO: créer un controller pour les créations de compte et hasher le password renseigné à ce moment là
+        $users = DB::table('UTILISATEUR')->get();
+        foreach ($users as $user) {
+            // évite de re-hasher un hash
+            if (Hash::needsRehash($user->password)) {
+                DB::table('UTILISATEUR')
+                    ->where('id', $user->id)
+                    ->update([
+                        'password' => Hash::make($user->password)
+                    ]);
+                logger('Passwords hashed on boot');
+            }
+        }
     }
 }
