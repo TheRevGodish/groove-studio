@@ -105,18 +105,17 @@
             background-size: cover;
             background-position: center;
             opacity: 0;
-            animation: heroSlide 20s ease-in-out infinite;
+            animation: heroSlide 15s ease-in-out infinite;
         }
 
         .hero-slide:nth-child(1) { animation-delay: 0s; }
         .hero-slide:nth-child(2) { animation-delay: 5s; }
         .hero-slide:nth-child(3) { animation-delay: 10s; }
-        .hero-slide:nth-child(4) { animation-delay: 15s; }
 
         @keyframes heroSlide {
             0%        { opacity: 0; }
-            5%, 22%   { opacity: 1; }
-            27%, 100% { opacity: 0; }
+            7%, 27%   { opacity: 1; }
+            33%, 100% { opacity: 0; }
         }
 
         /* dark overlay over photos */
@@ -706,7 +705,13 @@
     <div class="services-grid">
         <div class="service-card">
             <div class="service-number">01</div>
-            <span class="service-icon">🎙</span>
+            <span class="service-icon">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="20" cy="20" r="2.5" fill="var(--accent)"/>
+                    <circle cx="20" cy="20" r="8"   stroke="var(--accent)" stroke-width="1.5"/>
+                    <circle cx="20" cy="20" r="15"  stroke="var(--accent)" stroke-width="1" opacity="0.4"/>
+                </svg>
+            </span>
             <h3 class="service-name">ENREGISTREMENT</h3>
             <p class="service-desc">
                 Une cabine insonorisée de haut niveau et une régie équipée pour capter chaque nuance de votre performance.
@@ -721,7 +726,16 @@
 
         <div class="service-card">
             <div class="service-number">02</div>
-            <span class="service-icon">🥁</span>
+            <span class="service-icon">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="4"  y1="30" x2="4"  y2="20" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="11" y1="30" x2="11" y2="12" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="18" y1="30" x2="18" y2="17" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="25" y1="30" x2="25" y2="9"  stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="32" y1="30" x2="32" y2="15" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="39" y1="30" x2="39" y2="22" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </span>
             <h3 class="service-name">RÉPÉTITION</h3>
             <p class="service-desc">
                 Un espace généreux et bien équipé pour répéter, écrire et créer ensemble, dans une ambiance décontractée.
@@ -736,7 +750,14 @@
 
         <div class="service-card">
             <div class="service-number">03</div>
-            <span class="service-icon">🎚</span>
+            <span class="service-icon">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="4"  y1="20" x2="36" y2="20" stroke="var(--accent)" stroke-width="1.5"/>
+                    <line x1="20" y1="8"  x2="20" y2="32" stroke="var(--accent)" stroke-width="1.5"/>
+                    <line x1="12" y1="15" x2="12" y2="25" stroke="var(--accent)" stroke-width="1.5" opacity="0.5"/>
+                    <line x1="28" y1="15" x2="28" y2="25" stroke="var(--accent)" stroke-width="1.5" opacity="0.5"/>
+                </svg>
+            </span>
             <h3 class="service-name">MASTERING</h3>
             <p class="service-desc">
                 Finalisez votre son dans notre suite de mastering acoustiquement traitée, pensée pour la précision et le détail.
@@ -765,22 +786,48 @@
     </div>
     <div class="ambiance-right">
         <div class="ambiance-item">
-            <span class="ambiance-item-icon">☕</span>
+            <span class="ambiance-item-icon">
+                <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 22 Q10 12 16 22 Q22 32 28 22 Q34 12 40 22" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </span>
             <div class="ambiance-item-title">DÉTENTE</div>
             <p class="ambiance-item-desc">Salon confortable, café et thé à disposition. Parce qu'une pause fait partie du processus créatif.</p>
         </div>
         <div class="ambiance-item">
-            <span class="ambiance-item-icon">🕐</span>
+            <span class="ambiance-item-icon">
+                <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="6"  y1="34" x2="34" y2="6"  stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="14" y1="38" x2="38" y2="14" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" opacity="0.45"/>
+                </svg>
+            </span>
             <div class="ambiance-item-title">FLEXIBILITÉ</div>
             <p class="ambiance-item-desc">Créneaux de 1h à la journée complète, 7j/7, de 9h à minuit. On s'adapte à vos rythmes.</p>
         </div>
         <div class="ambiance-item">
-            <span class="ambiance-item-icon">🔒</span>
+            <span class="ambiance-item-icon">
+                <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="12" y="12" width="16" height="16" stroke="var(--accent)" stroke-width="1.5" transform="rotate(45 20 20)"/>
+                    <rect x="17" y="17" width="6"  height="6"  stroke="var(--accent)" stroke-width="1" transform="rotate(45 20 20)" opacity="0.45"/>
+                </svg>
+            </span>
             <div class="ambiance-item-title">SÉCURITÉ</div>
             <p class="ambiance-item-desc">Accès sécurisé, casiers pour vos instruments et équipements. Vos affaires sont en sécurité.</p>
         </div>
         <div class="ambiance-item">
-            <span class="ambiance-item-icon">🎧</span>
+            <span class="ambiance-item-icon">
+                <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="20" y1="4"  x2="20" y2="36" stroke="var(--accent)" stroke-width="1"   opacity="0.35"/>
+                    <line x1="4"  y1="20" x2="36" y2="20" stroke="var(--accent)" stroke-width="1"   opacity="0.35"/>
+                    <line x1="8"  y1="8"  x2="32" y2="32" stroke="var(--accent)" stroke-width="1"   opacity="0.35"/>
+                    <line x1="32" y1="8"  x2="8"  y2="32" stroke="var(--accent)" stroke-width="1"   opacity="0.35"/>
+                    <circle cx="20" cy="20" r="4" stroke="var(--accent)" stroke-width="1.5"/>
+                    <circle cx="20" cy="4"  r="2" fill="var(--accent)"/>
+                    <circle cx="20" cy="36" r="2" fill="var(--accent)"/>
+                    <circle cx="4"  cy="20" r="2" fill="var(--accent)"/>
+                    <circle cx="36" cy="20" r="2" fill="var(--accent)"/>
+                </svg>
+            </span>
             <div class="ambiance-item-title">EXPERTISE</div>
             <p class="ambiance-item-desc">Notre équipe est à votre disposition pour vous conseiller sur le matériel et les techniques.</p>
         </div>
