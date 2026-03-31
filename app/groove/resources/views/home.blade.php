@@ -85,7 +85,6 @@
 
         /* ── HERO ── */
         .hero {
-            background: var(--black);
             min-height: calc(50vh - 60px);
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -93,24 +92,44 @@
             overflow: hidden;
         }
 
-        .hero::before {
-            content: '';
+        /* carousel slides */
+        .hero-slides {
             position: absolute;
-            top: -200px; right: -200px;
-            width: 600px; height: 600px;
-            border-radius: 50%;
-            border: 1px solid rgba(200,169,110,0.08);
-            pointer-events: none;
+            inset: 0;
+            z-index: 0;
         }
 
-        .hero::after {
-            content: '';
+        .hero-slide {
             position: absolute;
-            bottom: -150px; left: 30%;
-            width: 400px; height: 400px;
-            border-radius: 50%;
-            border: 1px solid rgba(255,255,255,0.03);
-            pointer-events: none;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            animation: heroSlide 20s ease-in-out infinite;
+        }
+
+        .hero-slide:nth-child(1) { animation-delay: 0s; }
+        .hero-slide:nth-child(2) { animation-delay: 5s; }
+        .hero-slide:nth-child(3) { animation-delay: 10s; }
+        .hero-slide:nth-child(4) { animation-delay: 15s; }
+
+        @keyframes heroSlide {
+            0%        { opacity: 0; }
+            5%, 22%   { opacity: 1; }
+            27%, 100% { opacity: 0; }
+        }
+
+        /* dark overlay over photos */
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to right,
+                rgba(14,14,14,0.80) 0%,
+                rgba(14,14,14,0.55) 50%,
+                rgba(14,14,14,0.35) 100%
+            );
+            z-index: 1;
         }
 
         .hero-left {
@@ -119,7 +138,7 @@
             justify-content: center;
             padding: 40px 48px 40px 80px;
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
 
         .hero-eyebrow {
@@ -199,7 +218,7 @@
             justify-content: flex-end;
             padding: 40px 80px 40px 48px;
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
 
         .hero-stat-block {
@@ -614,6 +633,14 @@
 
 <!-- HERO -->
 <section class="hero">
+    <!-- background carousel — replace the URLs with your actual image paths -->
+    <div class="hero-slides">
+        <div class="hero-slide" style="background-image: url('/images/studio-1.jpg')"></div>
+        <div class="hero-slide" style="background-image: url('/images/studio-2.jpg')"></div>
+        <div class="hero-slide" style="background-image: url('/images/studio-3.jpg')"></div>
+    </div>
+    <div class="hero-overlay"></div>
+
     <div class="hero-left">
         <p class="hero-eyebrow fade-1">Studio d'enregistrement — Bordeaux</p>
         <h1 class="hero-title fade-2">
