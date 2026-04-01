@@ -319,7 +319,9 @@
         <div class="nav-center">
             
             <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Accueil</a>
-            
+
+            <a href="{{ route('reservation') }}" class="nav-link {{ request()->routeIs('reservation') ? 'active' : '' }}">Réservation</a>
+
             <a href="{{ route('client.dashboard') }}" class="nav-link {{ request()->routeIs('client.dashboard') ? 'active' : '' }}">Mon espace</a>
             
             @if(Auth::user()->is_admin)
