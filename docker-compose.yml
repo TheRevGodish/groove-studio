@@ -10,6 +10,7 @@ services:
       - "3306:3306"
     volumes:
       - ./initdb:/docker-entrypoint-initdb.d
+      - ./mysql-config/charset.cnf:/etc/mysql/conf.d/charset.cnf
       - db_data:/var/lib/mysql
 
   phpmyadmin:
