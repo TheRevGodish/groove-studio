@@ -16,12 +16,17 @@
         </div>
         <div class="stat-card">
             <div class="stat-label">Sessions confirmées</div>
-            <div class="stat-value">{{ $sessions->where('statut', 'confirmee')->count() }}</div>
+            <div class="stat-value">{{ collect($sessions)->where('status', 'confirmee')->count() }}</div>
         </div>
         <div class="stat-card">
             <div class="stat-label">Total dépensé</div>
-            <div class="stat-value">{{ number_format($sessions->sum('prix'), 0, ',', ' ') }}€</div>
+            <div class="stat-value">{{ number_format(collect($sessions)->sum('prix'), 0, ',', ' ') }}€</div>
         </div>
+    </div>
+
+    <div class="fade-2" style="display:flex; gap:12px; align-items:center;">
+        <a href="{{ route('home') }}" class="btn btn-primary">NOUVELLE DEMANDE</a>
+        <a href="{{ route('client.demande') }}" class="btn btn-ghost">GESTION DES DEMANDES</a>
     </div>
 
     <div class="fade-3">
@@ -47,14 +52,14 @@
                     @endphp
                     <tr>
                         <td>{{ $s->activite }}</td>
-                        <td class="td-muted">Studio {{ $s->numero_studio }}</td>
+                        <td class="td-muted">Studio {{ $s->id_studio }}</td>
                         <td class="td-muted">
                             {{ $debut->format('d/m/Y') }}<br>
                             <span style="font-size:12px;">{{ $debut->format('H\hi') }} → {{ $fin->format('H\hi') }}</span>
                         </td>
                         <td class="td-muted">{{ $duree }}</td>
                         <td class="td-bold">{{ $s->prix !== null ? number_format($s->prix, 0, ',', ' ').' €' : '—' }}</td>
-                        <td><span class="badge badge-{{ $s->statut }}">{{ ucfirst($s->statut) }}</span></td>
+                        <td><span class="badge badge-{{ $s->status }}">{{ ucfirst($s->status) }}</span></td>
                     </tr>
                 @empty
                     <tr>

@@ -38,6 +38,7 @@
 
     <div class="fade-3">
         <p class="section-label">Sessions récentes</p>
+        
         <div class="table-wrap">
             <table>
                 <thead>
@@ -55,11 +56,12 @@
                     <tr>
                         <td>{{ $s->prenom }} {{ $s->nom }}</td>
                         <td>{{ $s->activite }}</td>
-                        <td class="td-muted">Studio {{ $s->numero_studio }}</td>
+                        <td class="td-muted">Studio {{ $s->id_studio }}</td>
                         <td class="td-muted">{{ \Carbon\Carbon::parse($s->debut)->format('d/m/Y H\hi') }}</td>
                         <td class="td-bold">{{ $s->prix !== null ? number_format($s->prix, 0, ',', ' ').' €' : '—' }}</td>
-                        <td><span class="badge badge-{{ $s->statut }}">{{ ucfirst($s->statut) }}</span></td>
+                        <td><span class="badge badge-{{ $s->status }}">{{ ucfirst($s->status) }}</span></td>
                     </tr>
+                    
                 @empty
                     <tr>
                         <td colspan="6" style="padding: 32px 0; color: var(--gray); font-style: italic;">Aucune session enregistrée.</td>
@@ -70,9 +72,7 @@
         </div>
     </div>
 
-    <?php
-    #<div class="fade-4" style="margin-top: 40px;">
-    #    <a href="{{ route('admin.demandes') }}" class="btn btn-primary">VOIR LES DEMANDES →</a>
-    #</div>
-    ?>
+    <div class="fade-4" style="margin-top: 40px;">
+        <a href="{{ route('admin.demandes') }}" class="btn btn-primary">VOIR LES DEMANDES →</a>
+    </div>
 @endsection

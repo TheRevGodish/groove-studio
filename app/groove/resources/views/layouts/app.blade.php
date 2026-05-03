@@ -270,6 +270,12 @@
         .btn-accent { background: var(--accent); color: var(--black); }
         .btn-accent:hover { opacity: 0.85; }
 
+        .btn-danger { background: var(--danger); color: #ffffff; }
+        .btn-danger:hover { opacity: 0.9; }
+
+        .btn-success { background: var(--success); color: #fdfdfd; }
+        .btn-success:hover { opacity: 0.9; } 
+
         .btn-ghost {
             background: transparent;
             color: var(--black);

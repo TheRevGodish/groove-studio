@@ -7,14 +7,14 @@ use Illuminate\Support\Facades\Auth;
 class ClientController extends Controller
 {
     public function index() {
-        $sessions = DB::table('SESSION')
-            ->join('DEMANDE', 'SESSION.id_demande', '=', 'DEMANDE.numero_demande')
-            ->join('STUDIO', 'SESSION.numero_studio', '=', 'STUDIO.numero_studio')
-            ->join('ACTIVITE', 'STUDIO.id_activite', '=', 'ACTIVITE.id_activite')
-            ->where('DEMANDE.numero_client', Auth::id())
-            ->select('SESSION.*', 'ACTIVITE.type as activite')
-            ->orderBy('SESSION.debut', 'desc')
-            ->get();
+        $sessions = DB::select("
+            SELECT s.*, a.type AS activite
+            FROM Session s
+            JOIN Demande d  ON s.id_demande    = d.id_demande
+            JOIN Activite a ON s.id_activite   = a.id_activite
+            WHERE d.id_utilisateur = ?
+            ORDER BY s.debut DESC
+        ", [Auth::id()]);
 
         return view('client.dashboard_client', compact('sessions'));
     }
