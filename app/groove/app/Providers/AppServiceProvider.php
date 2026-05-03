@@ -21,6 +21,12 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      */
     public function boot(): void {
+        //  force utf8 to avoid encoding issues
+        try {
+            DB::statement("SET NAMES 'utf8mb4' COLLATE 'utf8mb4_unicode_ci'");
+        } catch (\Throwable $e) {
+            //ignore
+        }
         // TEMPORAIRE hasher les 2 password déjà présent en bdd juste pour test
         // TODO: créer un controller pour les créations de compte et hasher le password renseigné à ce moment là
         $users = DB::table('UTILISATEUR')->get();
