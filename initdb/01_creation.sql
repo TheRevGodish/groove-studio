@@ -1,161 +1,162 @@
 CREATE TABLE Structure(
-   id_structure INT AUTO_INCREMENT,
-   nom VARCHAR(50) ,
-   PRIMARY KEY(id_structure)
+                          id_structure INT AUTO_INCREMENT,
+                          nom VARCHAR(50) ,
+                          PRIMARY KEY(id_structure)
 );
 
 CREATE TABLE Employe(
-   id_employe INT AUTO_INCREMENT,
-   nom VARCHAR(50) ,
-   prenom VARCHAR(50) ,
-   description VARCHAR(50) ,
-   siren CHAR(9) ,
-   nir CHAR(15) ,
-   id_structure INT NOT NULL,
-   PRIMARY KEY(id_employe),
-   FOREIGN KEY(id_structure) REFERENCES Structure(id_structure)
+                        id_employe INT AUTO_INCREMENT,
+                        nom VARCHAR(50) ,
+                        prenom VARCHAR(50) ,
+                        description VARCHAR(50) ,
+                        siren CHAR(9) ,
+                        nir CHAR(15) ,
+                        id_structure INT NOT NULL,
+                        PRIMARY KEY(id_employe),
+                        FOREIGN KEY(id_structure) REFERENCES Structure(id_structure)
 );
 
 CREATE TABLE Specialite(
-   id_specialite INT AUTO_INCREMENT,
-   description VARCHAR(50) ,
-   taux_horaire DECIMAL(7,2)  ,
-   PRIMARY KEY(id_specialite)
+                           id_specialite INT AUTO_INCREMENT,
+                           description VARCHAR(50) ,
+                           taux_horaire DECIMAL(7,2)  ,
+                           PRIMARY KEY(id_specialite)
 );
 
 CREATE TABLE Materiel(
-   id_materiel INT AUTO_INCREMENT,
-   nom VARCHAR(50) ,
-   mobile BOOLEAN,
-   type VARCHAR(50) ,
-   PRIMARY KEY(id_materiel)
+                         id_materiel INT AUTO_INCREMENT,
+                         nom VARCHAR(50) ,
+                         mobile BOOLEAN,
+                         type VARCHAR(50) ,
+                         PRIMARY KEY(id_materiel)
 );
 
 CREATE TABLE Utilisateur(
-   id_utilisateur INT AUTO_INCREMENT,
-   nom VARCHAR(50) ,
-   prenom VARCHAR(50) ,
-   password TEXT ,
-   email VARCHAR(50) ,
-   telephone VARCHAR(50) ,
-   is_admin BOOLEAN,
-   PRIMARY KEY(id_utilisateur)
+                            id_utilisateur INT AUTO_INCREMENT,
+                            nom VARCHAR(50) ,
+                            prenom VARCHAR(50) ,
+                            password TEXT,
+                            email VARCHAR(50) ,
+                            telephone VARCHAR(50) ,
+                            is_admin BOOLEAN,
+                            PRIMARY KEY(id_utilisateur)
 );
 
 CREATE TABLE Activite(
-   id_activite INT AUTO_INCREMENT,
-   type VARCHAR(50) ,
-   employe_obligatoire BOOLEAN,
-   PRIMARY KEY(id_activite)
+                         id_activite INT AUTO_INCREMENT,
+                         type VARCHAR(50) ,
+                         employe_obligatoire BOOLEAN,
+                         PRIMARY KEY(id_activite)
 );
 
 CREATE TABLE creneau(
-   id_creneau INT AUTO_INCREMENT,
-   debut DATETIME,
-   fin DATETIME,
-   PRIMARY KEY(id_creneau)
+                        id_creneau INT AUTO_INCREMENT,
+                        debut DATETIME,
+                        fin DATETIME,
+                        PRIMARY KEY(id_creneau)
 );
 
 CREATE TABLE Studio(
-   id_studio INT AUTO_INCREMENT,
-   numero_studio INT,
-   capacite INT,
-   amenageable BOOLEAN,
-   taux_horaire DECIMAL(7,2)  ,
-   siren VARCHAR(9) ,
-   description VARCHAR(50) ,
-   id_activite INT NOT NULL,
-   id_structure INT NOT NULL,
-   PRIMARY KEY(id_studio),
-   FOREIGN KEY(id_activite) REFERENCES Activite(id_activite),
-   FOREIGN KEY(id_structure) REFERENCES Structure(id_structure)
+                       id_studio INT AUTO_INCREMENT,
+                       numero_studio INT,
+                       capacite INT,
+                       amenageable BOOLEAN,
+                       taux_horaire DECIMAL(7,2)  ,
+                       siren VARCHAR(9) ,
+                       description VARCHAR(50) ,
+                       id_activite INT NOT NULL,
+                       id_structure INT NOT NULL,
+                       PRIMARY KEY(id_studio),
+                       FOREIGN KEY(id_activite) REFERENCES Activite(id_activite),
+                       FOREIGN KEY(id_structure) REFERENCES Structure(id_structure)
 );
 
 CREATE TABLE Demande(
-   id_demande INT AUTO_INCREMENT,
-   nb_personnes TINYINT,
-   nb_techniciens TINYINT,
-   status TINYINT,
-   description VARCHAR(50) ,
-   date_demande DATETIME,
-   id_activite INT NOT NULL,
-   id_utilisateur INT NOT NULL,
-   id_studio INT NOT NULL,
-   PRIMARY KEY(id_demande),
-   FOREIGN KEY(id_activite) REFERENCES Activite(id_activite),
-   FOREIGN KEY(id_utilisateur) REFERENCES Utilisateur(id_utilisateur),
-   FOREIGN KEY(id_studio) REFERENCES Studio(id_studio)
+                        id_demande INT AUTO_INCREMENT,
+                        nb_personnes TINYINT,
+                        nb_techniciens TINYINT,
+                        status TINYINT,
+                        description VARCHAR(50) ,
+                        date_demande DATETIME,
+                        debut DATETIME,
+                        fin DATETIME,
+                        id_activite INT NOT NULL,
+                        id_utilisateur INT NOT NULL,
+                        id_studio INT NOT NULL,
+                        PRIMARY KEY(id_demande),
+                        FOREIGN KEY(id_activite) REFERENCES Activite(id_activite),
+                        FOREIGN KEY(id_utilisateur) REFERENCES Utilisateur(id_utilisateur),
+                        FOREIGN KEY(id_studio) REFERENCES Studio(id_studio)
 );
 
 CREATE TABLE Session(
-   id_session INT AUTO_INCREMENT,
-   nb_personnes TINYINT,
-   debut DATETIME,
-   fin DATETIME,
-   prix DECIMAL(8,2)  ,
-   description VARCHAR(50) ,
-   status VARCHAR(50) ,
-   id_demande INT NOT NULL,
-   id_activite INT NOT NULL,
-   id_studio INT NOT NULL,
-   PRIMARY KEY(id_session),
-   FOREIGN KEY(id_demande) REFERENCES Demande(id_demande),
-   FOREIGN KEY(id_activite) REFERENCES Activite(id_activite),
-   FOREIGN KEY(id_studio) REFERENCES Studio(id_studio)
+                        id_session INT AUTO_INCREMENT,
+                        nb_personnes TINYINT,
+                        debut DATETIME,
+                        fin DATETIME,
+                        prix DECIMAL(8,2)  ,
+                        description VARCHAR(50) ,
+                        id_demande INT NOT NULL,
+                        id_activite INT NOT NULL,
+                        id_studio INT NOT NULL,
+                        PRIMARY KEY(id_session),
+                        FOREIGN KEY(id_demande) REFERENCES Demande(id_demande),
+                        FOREIGN KEY(id_activite) REFERENCES Activite(id_activite),
+                        FOREIGN KEY(id_studio) REFERENCES Studio(id_studio)
 );
 
 CREATE TABLE avoir_pour_specialite(
-   id_employe INT,
-   id_specialite INT,
-   PRIMARY KEY(id_employe, id_specialite),
-   FOREIGN KEY(id_employe) REFERENCES Employe(id_employe),
-   FOREIGN KEY(id_specialite) REFERENCES Specialite(id_specialite)
+                                      id_employe INT,
+                                      id_specialite INT,
+                                      PRIMARY KEY(id_employe, id_specialite),
+                                      FOREIGN KEY(id_employe) REFERENCES Employe(id_employe),
+                                      FOREIGN KEY(id_specialite) REFERENCES Specialite(id_specialite)
 );
 
 CREATE TABLE contenir(
-   id_studio INT,
-   id_materiel INT,
-   PRIMARY KEY(id_studio, id_materiel),
-   FOREIGN KEY(id_studio) REFERENCES Studio(id_studio),
-   FOREIGN KEY(id_materiel) REFERENCES Materiel(id_materiel)
+                         id_studio INT,
+                         id_materiel INT,
+                         PRIMARY KEY(id_studio, id_materiel),
+                         FOREIGN KEY(id_studio) REFERENCES Studio(id_studio),
+                         FOREIGN KEY(id_materiel) REFERENCES Materiel(id_materiel)
 );
 
 CREATE TABLE etre_reservable(
-   id_studio INT,
-   id_creneau INT,
-   PRIMARY KEY(id_studio, id_creneau),
-   FOREIGN KEY(id_studio) REFERENCES Studio(id_studio),
-   FOREIGN KEY(id_creneau) REFERENCES creneau(id_creneau)
+                                id_studio INT,
+                                id_creneau INT,
+                                PRIMARY KEY(id_studio, id_creneau),
+                                FOREIGN KEY(id_studio) REFERENCES Studio(id_studio),
+                                FOREIGN KEY(id_creneau) REFERENCES creneau(id_creneau)
 );
 
 CREATE TABLE etre_disponible(
-   id_employe INT,
-   id_creneau INT,
-   PRIMARY KEY(id_employe, id_creneau),
-   FOREIGN KEY(id_employe) REFERENCES Employe(id_employe),
-   FOREIGN KEY(id_creneau) REFERENCES creneau(id_creneau)
+                                id_employe INT,
+                                id_creneau INT,
+                                PRIMARY KEY(id_employe, id_creneau),
+                                FOREIGN KEY(id_employe) REFERENCES Employe(id_employe),
+                                FOREIGN KEY(id_creneau) REFERENCES creneau(id_creneau)
 );
 
 CREATE TABLE affecter(
-   id_employe INT,
-   id_session INT,
-   PRIMARY KEY(id_employe, id_session),
-   FOREIGN KEY(id_employe) REFERENCES Employe(id_employe),
-   FOREIGN KEY(id_session) REFERENCES Session(id_session)
+                         id_employe INT,
+                         id_session INT,
+                         PRIMARY KEY(id_employe, id_session),
+                         FOREIGN KEY(id_employe) REFERENCES Employe(id_employe),
+                         FOREIGN KEY(id_session) REFERENCES Session(id_session)
 );
 
 CREATE TABLE reserver(
-   id_materiel INT,
-   id_session INT,
-   PRIMARY KEY(id_materiel, id_session),
-   FOREIGN KEY(id_materiel) REFERENCES Materiel(id_materiel),
-   FOREIGN KEY(id_session) REFERENCES Session(id_session)
+                         id_materiel INT,
+                         id_session INT,
+                         PRIMARY KEY(id_materiel, id_session),
+                         FOREIGN KEY(id_materiel) REFERENCES Materiel(id_materiel),
+                         FOREIGN KEY(id_session) REFERENCES Session(id_session)
 );
 
 CREATE TABLE emprunter(
-   id_materiel INT,
-   id_demande INT,
-   PRIMARY KEY(id_materiel, id_demande),
-   FOREIGN KEY(id_materiel) REFERENCES Materiel(id_materiel),
-   FOREIGN KEY(id_demande) REFERENCES Demande(id_demande)
+                          id_materiel INT,
+                          id_demande INT,
+                          PRIMARY KEY(id_materiel, id_demande),
+                          FOREIGN KEY(id_materiel) REFERENCES Materiel(id_materiel),
+                          FOREIGN KEY(id_demande) REFERENCES Demande(id_demande)
 );
