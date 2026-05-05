@@ -4,6 +4,11 @@
 
 @section('content')
 
+    @php
+        $statusLabel = [0 => 'En attente', 1 => 'Acceptée', 2 => 'Refusée'];
+        $statusClass = [0 => 'pending',    1 => 'accepted', 2 => 'refused'];
+    @endphp
+
     <div class="fade-1">
         <h1 class="page-title">MON ESPACE</h1>
         <p class="page-sub">Retrouvez ici l'historique de vos sessions et demandes.</p>
@@ -13,10 +18,6 @@
         <div class="stat-card">
             <div class="stat-label">Sessions totales</div>
             <div class="stat-value">{{ count($sessions) }}</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-label">Sessions confirmées</div>
-            <div class="stat-value">{{ collect($sessions)->where('status', 'confirmee')->count() }}</div>
         </div>
         <div class="stat-card">
             <div class="stat-label">Total dépensé</div>
@@ -59,7 +60,11 @@
                         </td>
                         <td class="td-muted">{{ $duree }}</td>
                         <td class="td-bold">{{ $s->prix !== null ? number_format($s->prix, 0, ',', ' ').' €' : '—' }}</td>
-                        <td><span class="badge badge-{{ $s->status }}">{{ ucfirst($s->status) }}</span></td>
+                        <td>
+                            <span class="badge badge-{{ $statusClass[$s->demande_status] ?? 'pending' }}">
+                                {{ $statusLabel[$s->demande_status] ?? '—' }}
+                            </span>
+                        </td>
                     </tr>
                 @empty
                     <tr>
@@ -70,10 +75,4 @@
             </table>
         </div>
     </div>
-    <?php
-    #<div class="fade-4" style="margin-top: 40px;">
-     #   <a href="{{ route('client.demande') }}" class="btn btn-primary">NOUVELLE DEMANDE →</a>
-    #</div>
-    ?>
-
 @endsection

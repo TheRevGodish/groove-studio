@@ -410,7 +410,7 @@
         <div class="alert alert-error fade-1">{{ $errors->first() }}</div>
     @endif
 
-    <form id="reservation-form" method="POST" action="{{ route('reservations.sendReservation') }}">
+    <form id="reservation-form" method="POST" action="{{ route('reservations.sendDemande') }}">
         @csrf
 
         {{-- ── STEP 1 ─────────────────────────────────── --}}
@@ -433,9 +433,9 @@
                         <label>Créneau horaire</label>
                         <div class="time-row">
                             <input type="time" id="heure_debut" name="heure_debut"
-                                   value="{{ old('heure_debut', '14:00') }}" required>
+                                   value="{{ old('heure_debut', '14:00') }}" step="1800" required>
                             <input type="time" id="heure_fin" name="heure_fin"
-                                   value="{{ old('heure_fin', '16:00') }}" required>
+                                   value="{{ old('heure_fin', '16:00') }}" step="1800" required>
                         </div>
                         <p class="helper">Studios ouverts de 9h00 à minuit.</p>
                     </div>
@@ -547,9 +547,9 @@
                 <div class="form-grid">
                     <div class="field-r full">
                         <label for="description">Commentaire (optionnel)</label>
-                        <textarea id="description" name="description" maxlength="40"
+                        <textarea id="description" name="description" maxlength="50"
                                   placeholder="Précisions, besoins particuliers…">{{ old('description') }}</textarea>
-                        <p class="helper">40 caractères maximum.</p>
+                        <p class="helper">50 caractères maximum.</p>
                     </div>
                 </div>
 
@@ -612,6 +612,22 @@
     }
     elActivite.addEventListener('change', syncTechField);
     syncTechField();
+
+    /* snap time inputs to :00 or :30 */
+    function snapToHalfHour(input) {
+        if (!input.value) return;
+        const [h, m] = input.value.split(':').map(Number);
+        if (Number.isNaN(h) || Number.isNaN(m)) return;
+        let totalMin = h * 60 + Math.round(m / 30) * 30;
+        if (totalMin >= 24 * 60) totalMin = 24 * 60 - 30;
+        const hh = String(Math.floor(totalMin / 60)).padStart(2, '0');
+        const mm = String(totalMin % 60).padStart(2, '0');
+        input.value = `${hh}:${mm}`;
+    }
+    [elDebut, elFin].forEach(el => {
+        el.addEventListener('change', () => snapToHalfHour(el));
+        el.addEventListener('blur',   () => snapToHalfHour(el));
+    });
 
     /* set sensible default date if empty */
     if (!elDate.value) {

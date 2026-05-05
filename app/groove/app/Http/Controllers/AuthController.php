@@ -21,8 +21,8 @@ class AuthController extends Controller {
             $request->session()->regenerate();
 
             return Auth::user()->is_admin
-                ? redirect()->route('admin.dashboard')
-                : redirect()->route('client.dashboard');
+                ? redirect()->intended(route('admin.dashboard'))
+                : redirect()->intended(route('client.dashboard'));
         }
 
         return back()->withErrors([

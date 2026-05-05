@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      */
     public function boot(): void {
-// TEMPORAIRE hasher les 2 password déjà présent en bdd juste pour test
+        // TEMPORAIRE hasher les 2 password déjà présent en bdd juste pour test
         // TODO: créer un controller pour les créations de compte et hasher le password renseigné à ce moment là
         try {
             $users = DB::select("SELECT id_utilisateur, password FROM Utilisateur");
@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
                         "UPDATE Utilisateur SET password = ? WHERE id_utilisateur = ?",
                         [Hash::make($user->password), $user->id_utilisateur]
                     );
-                    logger('Passwords hashed on boot');
+                    logger("Passwords for {$user->id_utilisateur} hashed on boot");
                 }
             }
         } catch (\Throwable $e) {

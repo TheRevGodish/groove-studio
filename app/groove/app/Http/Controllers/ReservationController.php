@@ -47,8 +47,8 @@ class ReservationController extends Controller {
               AND s.capacite   >= ?
               AND s.id_studio NOT IN (
                   SELECT DISTINCT id_studio
-                  FROM Session
-                  WHERE COALESCE(status, '') NOT IN ('annulee', 'refusee')
+                  FROM Demande
+                  WHERE status <> 2
                     AND debut < ?
                     AND fin   > ?
               )
@@ -79,11 +79,7 @@ class ReservationController extends Controller {
         ]);
     }
 
-    // TODO: il faut remanier les tables DEMANDES et SESSIONS
-    // elles sont quasi identiques, à qqs détails près, l'admin doit avoir
-    // toutes les infos utiles à la fin pour valider ou non (dates, heure, nb techniciens, etc)
-    // et ensuite, on modifie cette fonction en conséquence
-    public function sendReservation(Request $request, $id) {
+    public function sendDemande(Request $request) {
         $data = $request->validate([
             'date'           => 'required|date',
             'heure_debut'    => 'required',
@@ -92,28 +88,47 @@ class ReservationController extends Controller {
             'id_studio'      => 'required|integer',
             'nb_personnes'   => 'required|integer|min:1',
             'nb_techniciens' => 'nullable|integer|min:0',
-            'description'    => 'nullable|string|max:40',
+            'description'    => 'nullable|string|max:50',
         ]);
 
         $debut = $data['date'] . ' ' . $data['heure_debut'] . ':00';
+        $fin   = $data['date'] . ' ' . $data['heure_fin']   . ':00';
 
-        $note = '→' . substr($data['heure_fin'], 0, 5);
-        if (!empty($data['description'])) {
-            $note .= ' ' . $data['description'];
+        if (strtotime($fin) <= strtotime($debut)) {
+            return back()
+                ->withInput()
+                ->withErrors(['heure_fin' => "L'heure de fin doit être postérieure à l'heure de début."]);
         }
-        $note = substr($note, 0, 50);
+
+        $conflict = DB::select("
+            SELECT 1
+            FROM Demande
+            WHERE id_studio = ?
+              AND status   <> 2
+              AND debut < ?
+              AND fin   > ?
+            LIMIT 1
+        ", [$data['id_studio'], $fin, $debut]);
+
+        if (!empty($conflict)) {
+            return back()
+                ->withInput()
+                ->withErrors(['id_studio' => "Ce studio vient d'être réservé sur ce créneau. Merci de relancer la recherche."]);
+        }
 
         DB::insert("
             INSERT INTO Demande
                 (nb_personnes, nb_techniciens, status, description,
-                 date_demande, id_activite, id_utilisateur, id_studio)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                 date_demande, debut, fin,
+                 id_activite, id_utilisateur, id_studio)
+            VALUES (?, ?, ?, ?, NOW(), ?, ?, ?, ?, ?)
         ", [
             $data['nb_personnes'],
             $data['nb_techniciens'] ?? 0,
             0,
-            $note,
+            $data['description'] ?? null,
             $debut,
+            $fin,
             $data['id_activite'],
             Auth::id(),
             $data['id_studio'],
@@ -123,18 +138,5 @@ class ReservationController extends Controller {
             'success',
             'Votre demande a été envoyée. Elle sera examinée sous peu.'
         );
-    }
-
-    public function index() {
-        $sessions = DB::select("
-            SELECT s.*, a.type AS activite
-            FROM Session s
-            JOIN Demande d  ON s.id_demande    = d.id_demande
-            JOIN Activite a ON s.id_activite   = a.id_activite
-            WHERE d.id_utilisateur = ?
-            ORDER BY s.debut DESC
-        ", [Auth::id()]);
-
-        return view('client.dashboard_client', compact('sessions'));
     }
 }

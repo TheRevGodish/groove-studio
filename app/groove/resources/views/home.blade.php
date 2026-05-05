@@ -653,7 +653,7 @@
             Groove vous accueille dans un espace chaleureux conçu pour les artistes.
         </p>
         <div class="hero-actions fade-4">
-            <a href="{{ route('login') }}" class="btn-hero-primary">
+            <a href="{{ route('reservations') }}" class="btn-hero-primary">
                 Réserver un créneau <span class="arrow">→</span>
             </a>
             <a href="#services" class="btn-hero-ghost">Découvrir nos studios</a>

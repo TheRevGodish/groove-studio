@@ -22,9 +22,12 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/demandes/{id}', [AdminController::class, 'show'])->name('admin.demandes.show');
     Route::post('/demandes/{id}/valider', [AdminController::class, 'valider'])->name('admin.demandes.valider');
     Route::post('/demandes/{id}/refuser', [AdminController::class, 'refuser'])->name('admin.demandes.refuser');
+});
+
+Route::middleware('auth')->group(function () {
     Route::get('/reservations', [ReservationController::class, 'showReservations'])->name('reservations');
     Route::post('/reservations/check-availability', [ReservationController::class, 'checkAvailability'])->name('reservations.checkAvailability');
-    Route::post('/reservations/{id}', [ReservationController::class, 'sendReservation'])->name('reservations.sendReservation');
+    Route::post('/reservations', [ReservationController::class, 'sendDemande'])->name('reservations.sendDemande');
 });
 
 Route::middleware('auth')->prefix('client')->group(function () {

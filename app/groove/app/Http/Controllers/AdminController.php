@@ -7,7 +7,7 @@ class AdminController extends Controller {
 
     public function index() {
         $sessions = DB::select("
-            SELECT s.*, u.nom, u.prenom, a.type AS activite
+            SELECT s.*, u.nom, u.prenom, a.type AS activite, d.status AS demande_status
             FROM Session s
             JOIN Demande d    ON s.id_demande    = d.id_demande
             JOIN Utilisateur u ON d.id_utilisateur = u.id_utilisateur
@@ -16,11 +16,11 @@ class AdminController extends Controller {
         ");
 
         $nb_sessions = DB::select("SELECT COUNT(*) AS cnt FROM Session")[0]->cnt;
-        $nb_attentes = DB::select("SELECT COUNT(*) AS cnt FROM Session WHERE status = 'en_attente'")[0]->cnt;
+        $nb_attentes = DB::select("SELECT COUNT(*) AS cnt FROM Demande WHERE status = 0")[0]->cnt;
         $nb_users    = DB::select("SELECT COUNT(*) AS cnt FROM Utilisateur")[0]->cnt;
         $nb_clients  = DB::select("SELECT COUNT(*) AS cnt FROM Utilisateur WHERE is_admin = FALSE")[0]->cnt;
         $nb_demandes = DB::select("SELECT COUNT(*) AS cnt FROM Demande")[0]->cnt;
-        $revenus     = DB::select("SELECT COALESCE(SUM(prix), 0) AS total FROM Session WHERE status = 'confirmee'")[0]->total;
+        $revenus     = DB::select("SELECT COALESCE(SUM(prix), 0) AS total FROM Session")[0]->total;
 
         return view('admin.dashboard_admin', compact(
             'sessions', 'nb_sessions', 'nb_attentes', 'nb_demandes', 'nb_clients', 'revenus', 'nb_users'
@@ -33,7 +33,7 @@ class AdminController extends Controller {
             FROM Demande d
             JOIN Utilisateur u ON d.id_utilisateur = u.id_utilisateur
             JOIN Activite a    ON d.id_activite    = a.id_activite
-            HAVING d.status = 'En Attente'
+            WHERE d.status = 0
             ORDER BY d.date_demande DESC
         ");
 

@@ -8,7 +8,7 @@ class ClientController extends Controller
 {
     public function index() {
         $sessions = DB::select("
-            SELECT s.*, a.type AS activite
+            SELECT s.*, a.type AS activite, d.status AS demande_status
             FROM Session s
             JOIN Demande d  ON s.id_demande    = d.id_demande
             JOIN Activite a ON s.id_activite   = a.id_activite

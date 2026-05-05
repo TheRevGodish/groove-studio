@@ -4,6 +4,11 @@
 
 @section('content')
 
+    @php
+        $statusLabel = [0 => 'En attente', 1 => 'Acceptée', 2 => 'Refusée'];
+        $statusClass = [0 => 'pending',    1 => 'accepted', 2 => 'refused'];
+    @endphp
+
     <div class="fade-1">
         <h1 class="page-title">DASHBOARD</h1>
         <p class="page-sub">Vue d'ensemble de l'activité Groove Studio.</p>
@@ -38,7 +43,7 @@
 
     <div class="fade-3">
         <p class="section-label">Sessions récentes</p>
-        
+
         <div class="table-wrap">
             <table>
                 <thead>
@@ -59,9 +64,13 @@
                         <td class="td-muted">Studio {{ $s->id_studio }}</td>
                         <td class="td-muted">{{ \Carbon\Carbon::parse($s->debut)->format('d/m/Y H\hi') }}</td>
                         <td class="td-bold">{{ $s->prix !== null ? number_format($s->prix, 0, ',', ' ').' €' : '—' }}</td>
-                        <td><span class="badge badge-{{ $s->status }}">{{ ucfirst($s->status) }}</span></td>
+                        <td>
+                            <span class="badge badge-{{ $statusClass[$s->demande_status] ?? 'pending' }}">
+                                         {{ $statusLabel[$s->demande_status] ?? '—' }}
+                            </span>
+                        </td>
                     </tr>
-                    
+
                 @empty
                     <tr>
                         <td colspan="6" style="padding: 32px 0; color: var(--gray); font-style: italic;">Aucune session enregistrée.</td>
