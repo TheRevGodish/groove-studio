@@ -17,6 +17,10 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/demandes', [AdminController::class, 'demandes'])->name('admin.demandes');
+    Route::get('/demandes/{id}', [AdminController::class, 'show'])->name('admin.demandes.show');
+    Route::post('/demandes/{id}/valider', [AdminController::class, 'valider'])->name('admin.demandes.valider');
+    Route::post('/demandes/{id}/refuser', [AdminController::class, 'refuser'])->name('admin.demandes.refuser');
 });
 
 Route::middleware('auth')->prefix('client')->group(function () {

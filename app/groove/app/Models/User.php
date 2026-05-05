@@ -17,8 +17,8 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     // public mixed $is_admin;
-    protected $table = 'UTILISATEUR';
-    protected $primaryKey = 'id';
+    protected $table = 'Utilisateur';
+    protected $primaryKey = 'id_utilisateur';
     public $timestamps = false;
     /**
      * Get the attributes that should be cast.
