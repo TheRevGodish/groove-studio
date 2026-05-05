@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ReservationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,6 +22,9 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/demandes/{id}', [AdminController::class, 'show'])->name('admin.demandes.show');
     Route::post('/demandes/{id}/valider', [AdminController::class, 'valider'])->name('admin.demandes.valider');
     Route::post('/demandes/{id}/refuser', [AdminController::class, 'refuser'])->name('admin.demandes.refuser');
+    Route::get('/reservations', [ReservationController::class, 'showReservations'])->name('reservations');
+    Route::post('/reservations/check-availability', [ReservationController::class, 'checkAvailability'])->name('reservations.checkAvailability');
+    Route::post('/reservations/{id}', [ReservationController::class, 'sendReservation'])->name('reservations.sendReservation');
 });
 
 Route::middleware('auth')->prefix('client')->group(function () {

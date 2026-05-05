@@ -25,8 +25,8 @@
     </div>
 
     <div class="fade-2" style="display:flex; gap:12px; align-items:center;">
-        <a href="{{ route('home') }}" class="btn btn-primary">NOUVELLE DEMANDE</a>
-        <a href="{{ route('client.demande') }}" class="btn btn-ghost">GESTION DES DEMANDES</a>
+        <a href="{{ route('reservations') }}" class="btn btn-primary">NOUVELLE DEMANDE</a>
+        <a href="{{ route('client.dashboard') }}" class="btn btn-ghost">GESTION DES DEMANDES</a>
     </div>
 
     <div class="fade-3">

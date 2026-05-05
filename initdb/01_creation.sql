@@ -35,7 +35,7 @@ CREATE TABLE Utilisateur(
    id_utilisateur INT AUTO_INCREMENT,
    nom VARCHAR(50) ,
    prenom VARCHAR(50) ,
-   password VARCHAR(50) ,
+   password TEXT ,
    email VARCHAR(50) ,
    telephone VARCHAR(50) ,
    is_admin BOOLEAN,
